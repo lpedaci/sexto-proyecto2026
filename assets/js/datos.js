@@ -23,6 +23,10 @@ window.PROYECTO = {
   previewUrl: "",
   repoUrl: "",                        // repositorio del código (GitHub)
 
+  // Carta Gantt en Google Sheets: Archivo → Compartir → Publicar en la Web →
+  // Insertar → copiar la dirección de src="…" (termina en /pubhtml?...)
+  ganttSheetUrl: "",
+
   // --- Integrantes ---
   // rol: "pm" | "desarrollo" | "aplicaciones" | "infraestructura"
   // foto: ruta a una imagen (ej. "assets/img/integrantes/ana.jpg") o "" para iniciales

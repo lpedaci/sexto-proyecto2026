@@ -274,86 +274,27 @@
     requestAnimationFrame(() => { box.scrollLeft = Math.max(0, t.offsetLeft + $(".g-label", box).offsetWidth - box.clientWidth / 2); });
   }
 
-  /* ---------------------------------------------------------------- CPM */
-  const ACT = [
-    { id: "A", nombre: "Definición del problema y variables", dur: 3, pre: [] },
-    { id: "B", nombre: "Selección y prueba de sensores", dur: 4, pre: ["A"] },
-    { id: "C", nombre: "Diseño del servidor", dur: 3, pre: ["A"] },
-    { id: "D", nombre: "Diseño del circuito del nodo", dur: 3, pre: ["B"] },
-    { id: "E", nombre: "Firmware: lectura de sensores", dur: 4, pre: ["B"] },
-    { id: "F", nombre: "Instalación servidor + broker", dur: 3, pre: ["C"] },
-    { id: "G", nombre: "Dashboard mínimo", dur: 4, pre: ["C"] },
-    { id: "H", nombre: "Integración MQTT nodo ↔ servidor", dur: 3, pre: ["D", "E", "F"] },
-    { id: "I", nombre: "Visualización unificada", dur: 3, pre: ["G", "H"] },
-    { id: "J", nombre: "Pruebas de estabilidad y seguridad", dur: 3, pre: ["I"] },
-    { id: "K", nombre: "Documentación y defensa", dur: 3, pre: ["J"] }
-  ];
-  const by = Object.fromEntries(ACT.map((a) => [a.id, a]));
-  ACT.forEach((a) => { a.es = Math.max(0, ...a.pre.map((p) => by[p].ef)); a.ef = a.es + a.dur; });
-  const fin = Math.max(...ACT.map((a) => a.ef));
-  [...ACT].reverse().forEach((a) => {
-    const suc = ACT.filter((x) => x.pre.includes(a.id));
-    a.lf = suc.length ? Math.min(...suc.map((x) => x.ls)) : fin;
-    a.ls = a.lf - a.dur; a.h = a.ls - a.es;
-  });
-  $("#tablaCPM").innerHTML = ACT.map((a) =>
-    `<tr${a.h === 0 ? ' class="crit"' : ""}><td class="mono"><b>${a.id}</b></td><td>${esc(a.nombre)}</td><td class="num">${a.dur}</td><td class="mono">${a.pre.join(", ") || "—"}</td><td class="num">${a.es}</td><td class="num">${a.ef}</td><td class="num">${a.ls}</td><td class="num">${a.lf}</td><td class="num">${a.h === 0 ? "<b>0 · crítica</b>" : a.h}</td></tr>`).join("");
-  const critico = [];
-  let cur = ACT.find((a) => a.h === 0 && a.pre.length === 0);
-  while (cur) { critico.push(cur.id); cur = ACT.find((x) => x.h === 0 && x.pre.includes(cur.id) && x.es === cur.ef); }
-  // Diagrama de barras del CPM: inicio temprano → fin temprano, y la holgura punteada
-  const sem = (n) => (n / fin) * 100 + "%";
-  $("#cpmChart").style.setProperty("--n", fin);
-  $("#cpmChart").innerHTML = ACT.map((a, k) =>
-    `<div class="cpm-row"><b>${a.id}</b><div class="cpm-track">` +
-    (a.h ? `<div class="cpm-slack" style="--i:${k};left:${sem(a.ef)};width:${sem(a.h)}"></div>` : "") +
-    `<div class="cpm-bar${a.h === 0 ? " crit" : ""}" style="--i:${k};left:${sem(a.es)};width:${sem(a.dur)}" title="${esc(a.nombre)}"></div></div></div>`).join("") +
-    `<div class="cpm-row cpm-axis"><span></span><div class="cpm-scale">${[0, 5, 10, 15, 20].filter((w) => w <= fin).map((w) => `<span style="left:${sem(w)}">${w}</span>`).join("")}<span style="left:100%">${fin} sem.</span></div></div>`;
-  $("#resultadoCPM").innerHTML = `Duración mínima del proyecto: <b>${fin} semanas</b> de trabajo efectivo. Camino crítico: <b class="mono">${critico.join(" → ")}</b>. Cualquier atraso en esas actividades atrasa la entrega final; las demás tienen holgura.`;
-
-  /* ---------------------------------------------------------------- matriz de decisión */
-  const CRIT = [["Precisión", 0.30], ["Costo", 0.25], ["Disponibilidad local", 0.20], ["Facilidad de uso", 0.15], ["Consumo", 0.10]];
-  const OPC = [["DHT11", [2, 5, 5, 5, 4]], ["DHT22", [4, 4, 5, 5, 4]], ["SHT31 (I2C)", [5, 2, 3, 4, 5]], ["BME280 (I2C)", [5, 2, 3, 3, 5]]];
-  const puntaje = OPC.map(([n, v]) => [n, v.reduce((s, x, i) => s + x * CRIT[i][1], 0)]);
-  const mejor = puntaje.reduce((a, b) => (b[1] > a[1] ? b : a));
-  $("#tablaDecision").innerHTML =
-    `<thead><tr><th>Criterio</th><th class="num">Peso</th>${OPC.map(([n]) => `<th class="num">${esc(n)}</th>`).join("")}</tr></thead><tbody>` +
-    CRIT.map(([c, w], i) => `<tr><td>${c}</td><td class="num">${Math.round(w * 100)} %</td>${OPC.map(([, v]) => `<td class="num">${v[i]}</td>`).join("")}</tr>`).join("") +
-    `<tr><td><b>Puntaje ponderado</b></td><td class="num">100 %</td>${puntaje.map(([n, p]) => `<td class="num">${n === mejor[0] ? "<b>" + p.toFixed(2).replace(".", ",") + "</b>" : p.toFixed(2).replace(".", ",")}</td>`).join("")}</tr></tbody>`;
-  $("#barrasDecision").innerHTML = puntaje.map(([n, p], k) =>
-    `<div class="bar-row${n === mejor[0] ? " win" : ""}"><span>${esc(n)}</span><div class="bar-track"><div class="bar-fill" style="--i:${k};width:${(p / 5) * 100}%"></div></div><b class="mono">${p.toFixed(2).replace(".", ",")}</b></div>`).join("");
-  $("#resultadoDecision").innerHTML = `Opción elegida: <b>${mejor[0]}</b> con ${mejor[1].toFixed(2).replace(".", ",")} puntos sobre 5. Los pesos y puntajes son un ejemplo: el equipo debe justificarlos con datasheets y precios reales.`;
-
-  /* ---------------------------------------------------------------- riesgos */
-  const RIESGOS = [
-    ["Acceso no autorizado al broker MQTT", "Broker sin usuario ni contraseña", 3, 3, "allow_anonymous false, usuarios y ACL por tópico"],
-    ["Acceso por fuerza bruta al servidor (SSH)", "Contraseñas débiles, root habilitado", 2, 3, "Claves SSH, fail2ban, firewall ufw"],
-    ["Pérdida del histórico", "Falla del disco sin copias", 2, 3, "Backups automáticos 3-2-1 y restauración probada"],
-    ["Robo de credenciales del firmware", "Contraseñas en el repositorio público", 2, 3, "secrets.h en .gitignore, rotar contraseñas"],
-    ["Ingreso al dashboard con cuenta por defecto", "admin/admin sin cambiar", 3, 2, "Cambiar credenciales, panel público de solo lectura"],
-    ["Captura de datos en la red", "MQTT sin cifrar", 2, 2, "TLS en puerto 8883, red WiFi IoT separada"],
-    ["Robo o manipulación del nodo", "Nodo accesible en el aula", 2, 2, "Gabinete atornillado, montaje en altura, inventario"],
-    ["Corte de energía", "Nodo sin respaldo", 3, 1, "Batería 12 V y reconexión automática"],
-    ["Ingeniería social", "Equipo sin procedimiento para compartir accesos", 1, 3, "Nunca compartir contraseñas; un responsable por credencial"]
-  ];
-  const nivel = (v) => (v >= 6 ? ["lvl-alto", "Alto"] : v >= 3 ? ["lvl-medio", "Medio"] : ["lvl-bajo", "Bajo"]);
-  $("#tablaRiesgos").innerHTML = RIESGOS.map(([a, v, p, i, c], k) => {
-    const [cls, txt] = nivel(p * i);
-    return `<tr><td class="mono"><b>R${k + 1}</b></td><td>${esc(a)}</td><td>${esc(v)}</td><td class="num">${p}</td><td class="num">${i}</td><td><span class="lvl ${cls}">${txt} · ${p * i}</span></td><td>${esc(c)}</td></tr>`;
-  }).join("");
-
-  // Mapa de calor probabilidad × impacto
-  let calor = `<div class="ax"></div>${[1, 2, 3].map((i) => `<div class="ax">Impacto ${i}</div>`).join("")}`;
-  let celda = 0;
-  [3, 2, 1].forEach((p) => {
-    calor += `<div class="ax">Prob. ${p}</div>`;
-    [1, 2, 3].forEach((i) => {
-      const [cls, txt] = nivel(p * i);
-      const ids = RIESGOS.map((r, k) => (r[2] === p && r[3] === i ? `<span class="rid" title="${esc(r[0])}">R${k + 1}</span>` : "")).join("");
-      calor += `<div class="cell ${cls}" style="--i:${celda++}"><small>${txt} · ${p * i}</small><div>${ids}</div></div>`;
-    });
-  });
-  $("#mapaCalor").innerHTML = calor;
+  /* ---------------------------------------------------------------- Gantt en Google Sheets */
+  const sheetUrl = (() => {
+    try {
+      const u = new URL(P.ganttSheetUrl || "");
+      return u.protocol === "https:" && u.hostname === "docs.google.com" ? u.href : "";
+    } catch (e) { return ""; }
+  })();
+  if (sheetUrl) {
+    // widget=true y headers=false muestran la hoja limpia, sin el encabezado de Google
+    const embed = new URL(sheetUrl);
+    if (/\/pubhtml/.test(embed.pathname)) { embed.searchParams.set("widget", "true"); embed.searchParams.set("headers", "false"); }
+    $("#sheetFrame").src = embed.href;
+    $("#sheetFrame").hidden = false;
+    $("#sheetEmpty").hidden = true;
+    $("#sheetOpen").href = sheetUrl;
+    $("#sheetOpen").hidden = false;
+    $("#sheetEstado").className = "status on";
+    $("#sheetEstado").textContent = "Planilla conectada";
+  } else if (P.ganttSheetUrl) {
+    $("#sheetEstado").textContent = "Enlace no válido: debe ser de docs.google.com";
+  }
 
   /* ---------------------------------------------------------------- visor del proyecto */
   const frame = $("#viewerFrame"), empty = $("#viewerEmpty"), input = $("#viewerInput"), open = $("#viewerOpen");

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/styles.css?v=5">
+<link rel="stylesheet" href="assets/css/styles.css?v=7">
 <script>
   try { var t = localStorage.getItem("sc-theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
 </script>
@@ -34,6 +34,7 @@
     <symbol id="i-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0zM12 18v4"/></symbol>
     <symbol id="i-github" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.6c3.1-.4 6.4-1.5 6.4-7a5.4 5.4 0 0 0-1.5-3.7 5 5 0 0 0-.1-3.8s-1.2-.3-3.9 1.5a13.4 13.4 0 0 0-7 0C6.3 1.7 5.1 2 5.1 2a5 5 0 0 0-.1 3.8A5.4 5.4 0 0 0 3.5 9.5c0 5.4 3.3 6.6 6.4 7a3.4 3.4 0 0 0-.9 2.6V22"/></symbol>
     <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></symbol>
     <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></symbol>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="d-arrow"/></marker>
   </defs>
@@ -99,8 +100,7 @@
     <a class="card" href="#objetivo"><h3>1 · Presentación</h3><p>Objetivo, problema, alcances, equipo y asignaturas.</p></a>
     <a class="card" href="#scrum"><h3>2 · Planificación</h3><p>Scrum, sprints, carta Gantt y entregables.</p></a>
     <a class="card" href="#arquitectura"><h3>3 · Diseño técnico</h3><p>Arquitectura, plano, componentes, firmware, servidor y dashboard.</p></a>
-    <a class="card" href="#io"><h3>4 · Análisis</h3><p>Investigación Operativa y Seguridad Informática aplicadas al proyecto.</p></a>
-    <a class="card" href="#presupuesto"><h3>5 · Seguimiento</h3><p>Presupuesto, bitácora de pruebas, resultados y rúbrica.</p></a>
+    <a class="card" href="#presupuesto"><h3>4 · Seguimiento</h3><p>Presupuesto, bitácora de pruebas y resultados.</p></a>
     <a class="card quick-guia" href="#guia"><h3>Guía de uso</h3><p>Cómo editar, completar y publicar esta documentación.</p></a>
   </div>
 </section>
@@ -342,13 +342,13 @@
       <span class="tag a-io">Investigación Operativa</span>
       <h3>Decisiones con modelos</h3>
       <ul><li>Red PERT/CPM y camino crítico del proyecto</li><li>Matriz de decisión para elegir sensores</li><li>Optimización del presupuesto y la ubicación de nodos</li></ul>
-      <p><b>Productos:</b> red del proyecto con holguras, matriz de decisión justificada, modelo de optimización. <a href="#io">Ver apartado 16</a>.</p>
+      <p><b>Productos:</b> red del proyecto con holguras, matriz de decisión justificada, modelo de optimización.</p>
     </div>
     <div class="card area-card a-seginfo">
       <span class="tag a-seginfo">Seguridad Informática</span>
       <h3>Proteger el sistema y los datos</h3>
       <ul><li>Inventario de activos y matriz de riesgos</li><li>Seguridad física del nodo y seguridad lógica del servidor</li><li>Protección del broker, credenciales y marco legal</li></ul>
-      <p><b>Productos:</b> matriz de riesgos, plan de controles, checklist de hardening, informe de auditoría. <a href="#seguridad">Ver apartado 17</a>.</p>
+      <p><b>Productos:</b> matriz de riesgos, plan de controles, checklist de hardening, informe de auditoría.</p>
     </div>
   </div>
 </section>
@@ -391,12 +391,36 @@
   <p class="eyebrow">Segunda sección</p>
   <h1>8. Carta Gantt</h1>
   <p class="lead">Cronograma anual de marzo a noviembre: seis etapas, tareas por área, sprints, hitos de entrega y la fecha de hoy.</p>
+
+  <h2>8.1 Gantt del equipo (Google Sheets)</h2>
+  <p>El equipo lleva su carta Gantt en una planilla de Google Sheets y la muestra acá embebida, así siempre se ve la versión actualizada.</p>
+  <div class="sheet" id="sheet">
+    <div class="sheet-bar">
+      <span class="status off" id="sheetEstado">Sin planilla</span>
+      <span class="spacer"></span>
+      <a class="btn" id="sheetOpen" target="_blank" rel="noopener" hidden><svg class="icon"><use href="#i-ext"/></svg>Abrir en Sheets</a>
+    </div>
+    <div class="sheet-empty" id="sheetEmpty">
+      <svg class="big" aria-hidden="true"><use href="#i-table"/></svg>
+      <h3>Falta embeber la planilla de la Gantt</h3>
+      <p>Publiquen la planilla y peguen el enlace en <code>ganttSheetUrl</code> dentro de <code>assets/js/datos.js</code>.</p>
+      <ol class="steps">
+        <li><div>En Google Sheets: <b>Archivo → Compartir → Publicar en la Web</b>.</div></li>
+        <li><div>Elijan la hoja de la Gantt, la pestaña <b>Insertar</b> y presionen <b>Publicar</b>.</div></li>
+        <li><div>Copien la dirección que está dentro de <code>src="…"</code> (termina en <code>/pubhtml?…</code>) y péguenla en <code>ganttSheetUrl</code>.</div></li>
+      </ol>
+    </div>
+    <iframe class="sheet-frame" id="sheetFrame" title="Carta Gantt del equipo en Google Sheets" hidden loading="lazy"></iframe>
+  </div>
+
+  <h2>8.2 Cronograma de referencia</h2>
+  <p>Planificación institucional sugerida. Sirve de base para armar la Gantt del equipo.</p>
   <div class="gantt-legend" id="ganttLegend"></div>
   <div class="gantt" id="gantt-chart" tabindex="0" aria-label="Carta Gantt, se puede desplazar horizontalmente"></div>
   <p style="font-size:13.5px;color:var(--text-2)">◆ Hito / entregable · Línea roja: hoy · Rayado: receso invernal. En pantallas chicas la tabla se desplaza hacia el costado.</p>
   <div class="callout todo">
     <strong><svg class="icon"><use href="#i-edit"/></svg>A completar por el equipo</strong>
-    <p>Ajusten las fechas reales en <code>datos.js → gantt</code>. Si una tarea se atrasa, actualicen la fecha de fin y anoten el cambio en el <a href="#cambios">control de cambios</a>.</p>
+    <p>Mantengan la Gantt actualizada en la planilla de Google Sheets. Si quieren cambiar el cronograma de referencia, editen <code>datos.js → gantt</code>. Si una tarea se atrasa, actualicen la fecha de fin y anoten el cambio en el <a href="#cambios">control de cambios</a>.</p>
   </div>
 </section>
 
@@ -467,7 +491,7 @@
   </figure>
 
   <h2>Topología</h2>
-  <p>Topología en <b>estrella</b>: todos los nodos IoT se comunican con un único servidor central, que concentra la base de datos. Si un nodo falla, el resto sigue funcionando; si falla el servidor, se detiene el registro (por eso importan los <a href="#servidor">backups</a> y la reconexión automática).</p>
+  <p>Topología en <b>estrella</b>: todos los nodos IoT se comunican con un único servidor central, que concentra la base de datos. Si un nodo falla, el resto sigue funcionando; si falla el servidor, se detiene el registro (por eso importan los backups y la reconexión automática).</p>
   <h2>Plataforma central (primera implementación)</h2>
   <p>Linux + Mosquitto + Node-RED o Grafana, con un dashboard web que muestra el estado por sector.</p>
 </section>
@@ -600,131 +624,10 @@
   </div>
 </section>
 
-<!-- ================================================================ 13 FIRMWARE -->
-<section class="page" id="firmware" data-group="3 · Diseño técnico" data-title="Firmware y MQTT" data-num="13">
-  <p class="eyebrow">Tercera sección · Desarrollo de Software</p>
-  <h1>13. Diseño de software: firmware y MQTT</h1>
-  <h2>Responsabilidades del firmware</h2>
-  <ul>
-    <li>Leer los sensores cada intervalo fijo (temporización con <code>millis()</code>, sin <code>delay()</code> largos).</li>
-    <li>Validar los datos (descartar lecturas <code>NaN</code> o fuera de rango) y mostrarlos en el LCD.</li>
-    <li>Publicar por MQTT y reconectarse solo si se corta el WiFi o el broker.</li>
-    <li>Informar su estado (<i>online</i> / <i>offline</i>) con el mensaje de "última voluntad" (LWT).</li>
-  </ul>
-
-  <h2>Tópicos MQTT</h2>
-  <p>Estructura: <code>campus/&lt;sector&gt;/&lt;nodo&gt;/&lt;tipo&gt;</code></p>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Tópico</th><th>Dirección</th><th>Contenido</th><th>QoS / retain</th></tr></thead>
-    <tbody>
-      <tr><td><code>campus/lab-hw/nodo03/telemetria</code></td><td>Nodo → servidor</td><td>Lecturas en JSON cada 30 s</td><td>0 / no</td></tr>
-      <tr><td><code>campus/lab-hw/nodo03/estado</code></td><td>Nodo → servidor</td><td><code>online</code> u <code>offline</code> (LWT)</td><td>1 / sí</td></tr>
-      <tr><td><code>campus/lab-hw/nodo03/config</code></td><td>Servidor → nodo</td><td>Cambiar intervalo de lectura</td><td>1 / sí</td></tr>
-    </tbody>
-  </table></div>
-  <h3>Ejemplo de mensaje (payload)</h3>
-<pre><code>{
-  "nodo": "nodo03",
-  "t": 23.4,        // temperatura °C
-  "h": 48.1,        // humedad relativa %
-  "co": 12,         // ppm (sensor específico)
-  "rssi": -61,      // señal WiFi dBm
-  "uptime": 86400   // segundos encendido
-}</code></pre>
-
-  <h3>Esqueleto del firmware (Arduino / C++)</h3>
-<pre><code>#include &lt;WiFi.h&gt;
-#include &lt;PubSubClient.h&gt;
-#include "secrets.h"   // WIFI_SSID, WIFI_PASS, MQTT_USER, MQTT_PASS (NO subir al repositorio)
-
-const unsigned long INTERVALO = 30000;   // 30 s
-unsigned long ultimaLectura = 0;
-WiFiClient red;
-PubSubClient mqtt(red);
-
-void conectarMQTT() {
-  while (!mqtt.connected()) {
-    // LWT: si el nodo se cae, el broker publica "offline"
-    if (mqtt.connect("nodo03", MQTT_USER, MQTT_PASS,
-                     "campus/lab-hw/nodo03/estado", 1, true, "offline")) {
-      mqtt.publish("campus/lab-hw/nodo03/estado", "online", true);
-    } else {
-      delay(5000);  // reintento
-    }
-  }
-}
-
-void loop() {
-  if (WiFi.status() != WL_CONNECTED) WiFi.reconnect();
-  if (!mqtt.connected()) conectarMQTT();
-  mqtt.loop();
-
-  if (millis() - ultimaLectura &gt;= INTERVALO) {
-    ultimaLectura = millis();
-    float t = dht.readTemperature();
-    if (isnan(t)) return;          // lectura inválida: se descarta
-    // armar JSON, mostrar en LCD y publicar…
-  }
-}</code></pre>
-  <div class="callout todo">
-    <strong><svg class="icon"><use href="#i-edit"/></svg>A completar por el equipo</strong>
-    <p>Documenten la estructura de módulos del firmware (archivos y funciones), la calibración del sensor específico y la versión estable entregada.</p>
-  </div>
-</section>
-
-<!-- ================================================================ 14 SERVIDOR -->
-<section class="page" id="servidor" data-group="3 · Diseño técnico" data-title="Infraestructura del servidor" data-num="14">
-  <p class="eyebrow">Tercera sección · Laboratorio de Sistemas Operativos</p>
-  <h1>14. Infraestructura del servidor</h1>
-  <p class="lead">Servidor Linux (Ubuntu Server o Debian) que recibe, guarda y publica los datos de todos los nodos.</p>
-  <h2>Servicios</h2>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Servicio</th><th>Función</th><th class="num">Puerto</th><th>Acceso</th></tr></thead>
-    <tbody>
-      <tr><td>OpenSSH</td><td>Administración remota</td><td class="num">22</td><td>Solo red interna, con claves</td></tr>
-      <tr><td>Mosquitto</td><td>Broker MQTT</td><td class="num">1883 / 8883</td><td>Nodos (8883 = con TLS)</td></tr>
-      <tr><td>Node-RED</td><td>Procesa los mensajes y los guarda</td><td class="num">1880</td><td>Solo administradores</td></tr>
-      <tr><td>InfluxDB / MariaDB</td><td>Base de datos histórica</td><td class="num">8086 / 3306</td><td>Solo local (no exponer)</td></tr>
-      <tr><td>Grafana</td><td>Dashboard</td><td class="num">3000</td><td>Detrás de Nginx</td></tr>
-      <tr><td>Nginx</td><td>Proxy inverso / servicio web</td><td class="num">80 / 443</td><td>Público en la red escolar</td></tr>
-    </tbody>
-  </table></div>
-  <h2>Ejemplo con Docker Compose</h2>
-<pre><code>services:
-  mosquitto:
-    image: eclipse-mosquitto:2
-    ports: ["1883:1883"]
-    volumes: ["./mosquitto:/mosquitto/config", "mqtt-data:/mosquitto/data"]
-    restart: unless-stopped
-  nodered:
-    image: nodered/node-red:latest
-    ports: ["127.0.0.1:1880:1880"]
-    restart: unless-stopped
-  influxdb:
-    image: influxdb:2
-    volumes: ["influx-data:/var/lib/influxdb2"]
-    restart: unless-stopped
-  grafana:
-    image: grafana/grafana-oss:latest
-    ports: ["127.0.0.1:3000:3000"]
-    restart: unless-stopped
-volumes: { mqtt-data: {}, influx-data: {} }</code></pre>
-  <h2>Backup y recuperación</h2>
-  <ul>
-    <li>Copia diaria de la base de datos y de las carpetas de configuración (<code>cron</code> + script).</li>
-    <li>Regla 3-2-1: 3 copias, en 2 medios distintos, 1 fuera del servidor.</li>
-    <li>Probar la <b>restauración</b> al menos una vez y anotarla en la bitácora: un backup que nunca se restauró no está probado.</li>
-  </ul>
-  <div class="callout todo">
-    <strong><svg class="icon"><use href="#i-edit"/></svg>A completar por el equipo</strong>
-    <p>Manual de instalación paso a paso, diagrama de servicios, usuarios creados (sin contraseñas) y checklist de mantenimiento.</p>
-  </div>
-</section>
-
-<!-- ================================================================ 15 DASHBOARD -->
-<section class="page" id="dashboard" data-group="3 · Diseño técnico" data-title="Diseño de la aplicación" data-num="15">
+<!-- ================================================================ 13 DASHBOARD -->
+<section class="page" id="dashboard" data-group="3 · Diseño técnico" data-title="Diseño de la aplicación" data-num="13">
   <p class="eyebrow">Tercera sección · Laboratorio de Aplicaciones</p>
-  <h1>15. Diseño de la aplicación (dashboard)</h1>
+  <h1>13. Diseño de la aplicación (dashboard)</h1>
   <p class="lead">Tablero central con el estado de cada sector en tiempo real, históricos y alertas. Debe poder verse en una PC, una pantalla institucional y un celular.</p>
   <h2>Wireframe</h2>
   <figure class="diagram">
@@ -764,135 +667,10 @@ volumes: { mqtt-data: {}, influx-data: {} }</code></pre>
   </div>
 </section>
 
-<!-- ================================================================ 16 IO -->
-<section class="page" id="io" data-group="4 · Análisis" data-title="Investigación Operativa" data-num="16">
-  <p class="eyebrow">Cuarta sección</p>
-  <h1>16. Investigación Operativa</h1>
-  <p class="lead">Herramientas para tomar decisiones del proyecto con números: cuánto puede durar, qué tareas no pueden atrasarse, qué sensor conviene comprar y cómo repartir el presupuesto.</p>
-
-  <h2>16.1 Red PERT/CPM y camino crítico</h2>
-  <p>Cada actividad tiene una duración (en semanas) y actividades que deben terminar antes. Con el método del camino crítico (CPM) se calcula el inicio y fin más temprano (IT, FT), el inicio y fin más tardío (ITa, FTa) y la <b>holgura</b>: cuánto se puede atrasar una tarea sin atrasar todo el proyecto.</p>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Act.</th><th>Descripción</th><th class="num">Dur.</th><th>Predecesoras</th><th class="num">IT</th><th class="num">FT</th><th class="num">ITa</th><th class="num">FTa</th><th class="num">Holgura</th></tr></thead>
-    <tbody id="tablaCPM"></tbody>
-  </table></div>
-  <figure class="diagram fit">
-    <div class="cpm-chart" id="cpmChart" role="img" aria-label="Diagrama de barras de las actividades: en bordó las críticas, en línea punteada la holgura"></div>
-    <figcaption>Cada barra va del inicio al fin más temprano (en semanas). Bordó: actividad crítica. Punteado: holgura disponible.</figcaption>
-  </figure>
-  <div class="callout"><strong><svg class="icon"><use href="#i-info"/></svg>Resultado</strong><p id="resultadoCPM"></p></div>
-
-  <h2>16.2 Matriz de decisión: sensor de temperatura y humedad</h2>
-  <p>Se puntúa cada opción de 1 a 5 en cada criterio y se multiplica por el peso del criterio. Gana la opción con mayor puntaje ponderado.</p>
-  <div class="table-wrap"><table id="tablaDecision"></table></div>
-  <figure class="diagram fit">
-    <div class="bars" id="barrasDecision" role="img" aria-label="Puntaje ponderado de cada sensor"></div>
-    <figcaption>Puntaje ponderado sobre 5.</figcaption>
-  </figure>
-  <p id="resultadoDecision"></p>
-
-  <h2>16.3 Modelo de optimización del presupuesto</h2>
-  <p>Problema de <b>programación lineal entera</b>: elegir cuántos nodos de cada tipo construir para cubrir la mayor cantidad de sectores sin pasarse del presupuesto.</p>
-  <div class="card mono" style="font-size:14px;line-height:1.9">
-    Variables: x<sub>i</sub> = cantidad de nodos de tipo i<br>
-    Maximizar: Z = Σ v<sub>i</sub> · x<sub>i</sub> &nbsp;&nbsp;(v<sub>i</sub> = valor/prioridad del nodo i)<br>
-    Sujeto a: Σ c<sub>i</sub> · x<sub>i</sub> ≤ Presupuesto &nbsp;&nbsp;(c<sub>i</sub> = costo del nodo i)<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Σ x<sub>i</sub> ≥ 4 &nbsp;&nbsp;(primera implementación: 4 nodos)<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x<sub>i</sub> ≥ 0, enteros
-  </div>
-  <div class="callout todo">
-    <strong><svg class="icon"><use href="#i-edit"/></svg>A completar por el equipo</strong>
-    <p>Reemplacen las duraciones por las reales, armen el diagrama de red, completen los costos c<sub>i</sub> con el <a href="#presupuesto">presupuesto</a> y resuelvan el modelo (por ejemplo con el Solver de Excel o LibreOffice Calc).</p>
-  </div>
-</section>
-
-<!-- ================================================================ 17 SEGURIDAD -->
-<section class="page" id="seguridad" data-group="4 · Análisis" data-title="Seguridad Informática" data-num="17">
-  <p class="eyebrow">Cuarta sección</p>
-  <h1>17. Seguridad Informática</h1>
-  <p class="lead">Un sistema IoT conectado a la red de la escuela es un punto de entrada posible. Este apartado identifica qué hay que proteger, de qué amenazas y con qué controles.</p>
-
-  <h2>17.1 Pilares aplicados al proyecto</h2>
-  <div class="grid">
-    <div class="card"><span class="tag a-seginfo">Confidencialidad</span><p style="color:var(--text-2);font-size:14.5px">Solo usuarios autorizados acceden al broker, al servidor y a la configuración.</p></div>
-    <div class="card"><span class="tag a-seginfo">Integridad</span><p style="color:var(--text-2);font-size:14.5px">Nadie puede publicar datos falsos ni modificar el histórico.</p></div>
-    <div class="card"><span class="tag a-seginfo">Disponibilidad</span><p style="color:var(--text-2);font-size:14.5px">El sistema sigue midiendo ante cortes de luz o de red, y se recupera de fallas.</p></div>
-  </div>
-
-  <h2>17.2 Inventario de activos</h2>
-  <div class="table-wrap"><table>
-    <thead><tr><th>Activo</th><th>Tipo</th><th>Responsable</th></tr></thead>
-    <tbody>
-      <tr><td>Nodos ESP32 instalados</td><td>Físico</td><td>Infraestructura</td></tr>
-      <tr><td>Servidor Linux</td><td>Físico / lógico</td><td>Infraestructura</td></tr>
-      <tr><td>Broker MQTT y base de datos</td><td>Lógico</td><td>Infraestructura</td></tr>
-      <tr><td>Firmware y credenciales (WiFi, MQTT)</td><td>Lógico</td><td>Desarrollo</td></tr>
-      <tr><td>Dashboard y cuentas de acceso</td><td>Lógico</td><td>Aplicaciones</td></tr>
-      <tr><td>Datos históricos</td><td>Información</td><td>Project Manager</td></tr>
-    </tbody>
-  </table></div>
-
-  <h2>17.3 Matriz de riesgos</h2>
-  <p>Nivel de riesgo = Probabilidad × Impacto (escala 1 a 3). <b>Alto</b> ≥ 6 · <b>Medio</b> 3 – 4 · <b>Bajo</b> ≤ 2.</p>
-  <figure class="diagram fit">
-    <div class="heat" id="mapaCalor" role="img" aria-label="Mapa de calor de riesgos: probabilidad por impacto"></div>
-    <figcaption>Mapa de calor: cada riesgo (R1, R2…) se ubica según su probabilidad e impacto.</figcaption>
-  </figure>
-  <div class="table-wrap"><table>
-    <thead><tr><th>ID</th><th>Amenaza</th><th>Vulnerabilidad</th><th class="num">P</th><th class="num">I</th><th>Nivel</th><th>Control propuesto</th></tr></thead>
-    <tbody id="tablaRiesgos"></tbody>
-  </table></div>
-
-  <h2>17.4 Seguridad física del nodo</h2>
-  <ul>
-    <li>Gabinete cerrado con tornillos, instalado en altura y fuera del alcance directo.</li>
-    <li>Alimentación protegida con fusible y batería de respaldo; cables canalizados.</li>
-    <li>Etiqueta con identificador del nodo e inventario actualizado.</li>
-    <li>Servidor en una sala con acceso restringido.</li>
-  </ul>
-
-  <h2>17.5 Seguridad lógica: checklist de hardening</h2>
-  <ul class="checklist">
-    <li>Mosquitto con <code>allow_anonymous false</code>, archivo de contraseñas y ACL por tópico (cada nodo solo publica en su tópico).</li>
-    <li>TLS en el puerto 8883 para cifrar los mensajes.</li>
-    <li>SSH con claves, sin acceso de <code>root</code>; <code>fail2ban</code> activo.</li>
-    <li>Firewall <code>ufw</code>: solo se abren los puertos necesarios.</li>
-    <li>Cambio de credenciales por defecto (por ejemplo, <code>admin/admin</code> de Grafana).</li>
-    <li>Credenciales en <code>secrets.h</code> agregado a <code>.gitignore</code>: nunca en el repositorio público.</li>
-    <li>Red WiFi separada para los dispositivos IoT, con WPA2.</li>
-    <li>Actualizaciones del sistema y usuarios con el mínimo privilegio necesario.</li>
-    <li>Backups automáticos y una restauración probada.</li>
-  </ul>
-<pre><code># /etc/mosquitto/conf.d/seguro.conf
-listener 8883
-allow_anonymous false
-password_file /etc/mosquitto/passwd
-acl_file      /etc/mosquitto/acl
-cafile   /etc/mosquitto/certs/ca.crt
-certfile /etc/mosquitto/certs/server.crt
-keyfile  /etc/mosquitto/certs/server.key</code></pre>
-
-  <h2>17.6 Amenazas humanas y lógicas</h2>
-  <div class="grid-2">
-    <div class="card"><h3 style="margin-top:0">Humanas</h3><ul><li>Ingeniería social: alguien pide la contraseña "para probar".</li><li>Manipulación o robo del nodo.</li><li>Errores de configuración por falta de procedimiento.</li></ul></div>
-    <div class="card"><h3 style="margin-top:0">Lógicas</h3><ul><li>Captura de mensajes MQTT sin cifrar.</li><li>Publicación de datos falsos en el broker.</li><li>Saturación del broker (denegación de servicio).</li><li>Malware en el servidor por software desactualizado.</li></ul></div>
-  </div>
-
-  <h2>17.7 Marco legal</h2>
-  <ul>
-    <li><b>Ley 25.326</b> de Protección de Datos Personales: el sistema <b>no identifica personas</b>. El sensor PIR solo detecta presencia, no se usan cámaras ni micrófonos que graben.</li>
-    <li><b>Ley 26.388</b> de Delitos Informáticos: el acceso indebido a un sistema y el daño a datos son delitos. Las pruebas de seguridad se hacen solo sobre el sistema propio y con autorización docente.</li>
-  </ul>
-  <div class="callout todo">
-    <strong><svg class="icon"><use href="#i-edit"/></svg>A completar por el equipo</strong>
-    <p>Informe de la auditoría de seguridad (etapa 5): qué controles se verificaron, cómo se probaron y qué resultado dieron. Registren cada prueba en la <a href="#pruebas">bitácora</a>.</p>
-  </div>
-</section>
-
-<!-- ================================================================ 18 PRESUPUESTO -->
-<section class="page" id="presupuesto" data-group="5 · Seguimiento" data-title="Presupuesto y BOM" data-num="18">
+<!-- ================================================================ 14 PRESUPUESTO -->
+<section class="page" id="presupuesto" data-group="4 · Seguimiento" data-title="Presupuesto y BOM" data-num="14">
   <p class="eyebrow">Seguimiento</p>
-  <h1>18. Presupuesto y lista de materiales (BOM)</h1>
+  <h1>14. Presupuesto y lista de materiales (BOM)</h1>
   <p class="lead">Costo de un nodo. Multipliquen por la cantidad de nodos y sumen el servidor si hay que comprarlo.</p>
   <div class="table-wrap"><table>
     <thead><tr><th>Ítem</th><th class="num">Cant.</th><th class="num">Precio unit.</th><th class="num">Subtotal</th></tr></thead>
@@ -904,10 +682,10 @@ keyfile  /etc/mosquitto/certs/server.key</code></pre>
   </div>
 </section>
 
-<!-- ================================================================ 19 PRUEBAS -->
-<section class="page" id="pruebas" data-group="5 · Seguimiento" data-title="Bitácora de pruebas" data-num="19">
+<!-- ================================================================ 15 PRUEBAS -->
+<section class="page" id="pruebas" data-group="4 · Seguimiento" data-title="Bitácora de pruebas" data-num="15">
   <p class="eyebrow">Seguimiento</p>
-  <h1>19. Bitácora de pruebas</h1>
+  <h1>15. Bitácora de pruebas</h1>
   <p class="lead">Evidencia técnica de que el sistema funciona: qué se probó, qué se esperaba y qué pasó.</p>
   <div class="table-wrap"><table>
     <thead><tr><th>Fecha</th><th>Prueba</th><th>Resultado esperado</th><th>Resultado obtenido</th><th>Estado</th></tr></thead>
@@ -924,10 +702,10 @@ keyfile  /etc/mosquitto/certs/server.key</code></pre>
   </div>
 </section>
 
-<!-- ================================================================ 20 RESULTADOS -->
-<section class="page" id="resultados" data-group="5 · Seguimiento" data-title="Resultados y mejoras" data-num="20">
+<!-- ================================================================ 16 RESULTADOS -->
+<section class="page" id="resultados" data-group="4 · Seguimiento" data-title="Resultados y mejoras" data-num="16">
   <p class="eyebrow">Seguimiento</p>
-  <h1>20. Resultados y mejoras futuras</h1>
+  <h1>16. Resultados y mejoras futuras</h1>
   <h2>Resultados</h2>
   <div class="callout todo">
     <strong><svg class="icon"><use href="#i-edit"/></svg>A completar por el equipo</strong>
@@ -943,27 +721,16 @@ keyfile  /etc/mosquitto/certs/server.key</code></pre>
   </ul>
 </section>
 
-<!-- ================================================================ 21 RÚBRICA -->
-<section class="page" id="rubrica" data-group="5 · Seguimiento" data-title="Rúbrica de evaluación" data-num="21">
-  <p class="eyebrow">Seguimiento</p>
-  <h1>21. Rúbrica de evaluación</h1>
-  <div class="grid-2">
-    <div class="card area-card a-desarrollo"><h3>Técnica</h3><ul><li>Funcionamiento del nodo</li><li>Calidad del código</li><li>Integración de servicios</li><li>Estabilidad de la solución</li></ul></div>
-    <div class="card area-card a-pm"><h3>Proyecto</h3><ul><li>Planificación</li><li>Trabajo colaborativo</li><li>Cumplimiento de roles</li><li>Resolución de problemas</li></ul></div>
-    <div class="card area-card a-so"><h3>Documentación</h3><ul><li>Claridad</li><li>Prolijidad</li><li>Evidencia técnica</li><li>Trazabilidad</li></ul></div>
-    <div class="card area-card a-aplicaciones"><h3>Presentación</h3><ul><li>Demostración real</li><li>Argumentación técnica</li><li>Claridad expositiva</li></ul></div>
-  </div>
-</section>
-
-<!-- ================================================================ 22 GUÍA -->
-<section class="page page-guia" id="guia" data-group="Guía de uso" data-title="Cómo usar esta documentación" data-num="22">
+<!-- ================================================================ 17 GUÍA -->
+<section class="page page-guia" id="guia" data-group="Guía de uso" data-title="Cómo usar esta documentación" data-num="17">
   <p class="eyebrow">Manual de usuario</p>
-  <h1><span class="guide-badge" aria-hidden="true"><svg class="icon"><use href="#i-book"/></svg></span>22. Cómo usar esta documentación</h1>
+  <h1><span class="guide-badge" aria-hidden="true"><svg class="icon"><use href="#i-book"/></svg></span>17. Cómo usar esta documentación</h1>
   <p class="lead">Instrucciones para que el equipo complete, actualice y publique su carpeta del proyecto.</p>
   <h2>Editar los datos del equipo</h2>
   <ol class="steps">
     <li><div>Abran <code>assets/js/datos.js</code> con un editor de código (por ejemplo VS Code).</div></li>
     <li><div>Completen nombre del equipo, curso, <b>nodo asignado</b> e integrantes con el formato <code>"Apellido, Nombre"</code>.</div></li>
+    <li><div>Publiquen la planilla de la Gantt en Google Sheets y peguen el enlace en <code>ganttSheetUrl</code> (ver <a href="#gantt">Carta Gantt</a>).</div></li>
     <li><div>Actualicen la Gantt, el presupuesto, las pruebas y el control de cambios a medida que avanza el proyecto.</div></li>
     <li><div>Los textos largos de cada apartado se editan directamente en <code>index.html</code>.</div></li>
   </ol>
@@ -993,7 +760,7 @@ keyfile  /etc/mosquitto/certs/server.key</code></pre>
   <p>Proyecto Institucional 6to año <span data-bind="ciclo"></span> · <span data-bind="institucion"></span></p>
 </footer>
 
-<script src="assets/js/datos.js?v=3"></script>
-<script src="assets/js/app.js?v=5"></script>
+<script src="assets/js/datos.js?v=6"></script>
+<script src="assets/js/app.js?v=6"></script>
 </body>
 </html>

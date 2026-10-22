@@ -507,3 +507,20 @@ tr.crit td { background: color-mix(in srgb, var(--a-seginfo) 10%, transparent); 
 /* Flujo de datos: el trazo avanza siempre a la misma velocidad (período 8 = desplazamiento 8) */
 .flow-line { stroke: var(--accent); stroke-width: 2; fill: none; stroke-dasharray: 5 3; animation: mg-flow .6s linear infinite; }
 @keyframes mg-flow { to { stroke-dashoffset: -8; } }
+
+/* ============ Gantt embebida (Google Sheets) ============ */
+.sheet { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow); margin: 16px 0 8px; }
+.sheet-bar { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--border); background: var(--surface-2); }
+.sheet-bar .spacer { flex: 1; }
+.sheet-empty { max-width: 620px; margin: 0 auto; padding: 28px 16px; text-align: center; }
+.sheet-empty .big { width: 44px; height: 44px; color: var(--text-3); }
+.sheet-empty h3 { margin: 10px 0 6px; }
+.sheet-empty p { color: var(--text-2); }
+.sheet-empty .steps { text-align: left; }
+.sheet-empty .steps li { border-left-color: var(--border-strong); }
+.sheet-empty .steps li::before { background: var(--surface-2); color: var(--text-2); }
+.sheet-frame { display: block; width: 100%; height: 70vh; min-height: 420px; border: 0; background: #fff; }
+.sheet-empty[hidden], .sheet-frame[hidden] { display: none; }
+
+/* Lo oculto siempre queda oculto, aunque el componente defina display */
+[hidden] { display: none !important; }
